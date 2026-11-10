@@ -16,6 +16,6 @@ concurrency:
 
 jobs:
   sonarcloud:
-    # Tracked at @main so org-wide CI improvements propagate without PR churn.
-    uses: storytold/craft-common-actions/.github/workflows/sonarcloud.yml@main
+    if: ${{ github.repository_owner == 'mamankub' && github.actor == 'mamankub' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
+    uses: ./.github/workflows/self-hosted-sonarcloud.yml
     secrets: inherit

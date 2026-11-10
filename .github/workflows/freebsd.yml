@@ -25,8 +25,8 @@ permissions:
 
 jobs:
   freebsd:
-    # Intentionally tracked at @main (not SHA-pinned) so org-wide CI improvements, security fixes, and build optimizations propagate without PR churn across all craftapp repos.
-    uses: storytold/craft-common-actions/.github/workflows/freebsd.yml@main
+    if: ${{ github.repository_owner == 'mamankub' && github.actor == 'mamankub' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
+    uses: ./.github/workflows/self-hosted-freebsd.yml
     with:
       require-craft-fonts: true
       craft-fonts-ref: b076417b5880bd4154bd22f00695b1d28c6bea83

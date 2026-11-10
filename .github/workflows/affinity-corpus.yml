@@ -17,7 +17,8 @@ concurrency:
 
 jobs:
   affinity3:
-    runs-on: ubuntu-latest
+    if: ${{ github.repository_owner == 'mamankub' && github.actor == 'mamankub' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
+    runs-on: ["self-hosted", "Linux", "X64", "asd-ci", "ubuntu-24.04"]
     timeout-minutes: 30
     env:
       AFFINITY_CORPUS_REQUIRED: "1"
