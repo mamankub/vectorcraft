@@ -21,8 +21,9 @@ concurrency:
 
 jobs:
   git-sources:
+    if: ${{ github.repository_owner == 'mamankub' && github.actor == 'mamankub' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
     name: Git dependencies come from storytold
-    runs-on: ubuntu-latest
+    runs-on: ["self-hosted", "Linux", "X64", "asd-ci", "ubuntu-24.04"]
     permissions:
       contents: read
     steps:
@@ -60,12 +61,12 @@ jobs:
           PY
 
   release:
+    if: ${{ github.repository_owner == 'mamankub' && github.actor == 'mamankub' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
     needs: git-sources
     permissions:
       contents: write
       packages: write
-    # Intentionally tracked at @main (not SHA-pinned) so org-wide CI improvements, security fixes, and build optimizations propagate without PR churn across all craftapp repos.
-    uses: storytold/craft-common-actions/.github/workflows/release.yml@main
+    uses: ./.github/workflows/self-hosted-release.yml
     with:
       app-name: vectorcraft
       app-title: VectorCraft

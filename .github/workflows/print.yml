@@ -21,8 +21,8 @@ jobs:
   # Desktop printing on Windows, through the suite's shared gate. Pull requests restore the cache
   # but never save one; a manual run on main saves the cache they restore.
   windows:
-    # Tracks @main so suite-wide CI fixes reach every app without a PR in each repository.
-    uses: storytold/craft-common-actions/.github/workflows/gate.yml@main
+    if: ${{ github.repository_owner == 'mamankub' && github.actor == 'mamankub' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
+    uses: ./.github/workflows/self-hosted-gate.yml
     with:
       os: '["windows-2022"]'
       timeout-minutes: 90
